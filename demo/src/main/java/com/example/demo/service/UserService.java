@@ -10,12 +10,13 @@ import com.example.demo.entity.User;
 @Component
 public class UserService {
     
-    public List<String> getUser() {    
-        List<String> list = new ArrayList<>();
-        list.add(new User("1", "Miaomiao", "miaoXX@gamil.com").toString());
-        list.add(new User("1", "WangWang", "WangWang@gamil.com").toString());
-        list.add(new User("1", "PiPi", "PiPi@gamil.com").toString());
-        list.add(new User("1", "XIXI", "sxc@gamil.com").toString());
+    public List<User> getUser() {    
+        List<User> list = new ArrayList<>();
+        list.add(new User("1", "Miaomiao", "miaoXX@gamil.com"));
+        list.add(new User("1", "WangWang", "WangWang@gamil.com"));
+        list.add(new User("1", "PiPi", "PiPi@gamil.com"));
+        list.add(new User("1", "XIXI", "sxc@gamil.com"));
+        list.add(new User("1", "XIXI", "sxc@gamil.com"));
         return list;
 
     }

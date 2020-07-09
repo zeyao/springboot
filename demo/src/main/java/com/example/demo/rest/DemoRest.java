@@ -1,6 +1,10 @@
 package com.example.demo.rest;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.function.Predicate;
+
+import com.example.demo.entity.User;
 import com.example.demo.service.CodingQuestionService;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,11 +48,52 @@ public class DemoRest {
     @RequestMapping("/getAllUser")
     public String getAllUser() {
         try {
-            return objectMapper.writeValueAsString(userService.getUser());
+            StringBuilder sb = new StringBuilder();
+            userService.getUser().forEach(a -> sb.append(a.toString()));
+            return objectMapper.writeValueAsString(sb.toString()); 
         } catch (IOException e) {
             return "Error when parsing Json";
         }
     }
+
+
+    @RequestMapping("/getAllUserCountByName")
+    public String getAllUserCountByName() {
+        try {
+            String targetName = "XIXI";
+            List<User> user = userService.getUser();
+            int count = sum(user, u -> targetName.equals(u.getUserName()));
+            return String.valueOf(count); 
+        } catch (Exception e) {
+            return "Error when parsing Json";
+        }
+    }
+
+    @RequestMapping("/getAllUserCountByEmail")
+    public String getAllUserCountByEmail() {
+        try {
+            String email = "PiPi@gamil.com";
+            List<User> user = userService.getUser();
+            int count = sum(user, u -> email.equals(u.getEmail()));
+            return String.valueOf(count);
+        } catch (Exception e) {
+            return "Error when parsing Json";
+        }
+    }
+    //Predicate 函数接口设计模式
+    //用于定义common behavior
+    //如果我们要对某个对象进行很多不同的判断
+    //减少类似的代码的重复使用
+    public int sum(List<User> list, Predicate<User> p) {
+        int res = 0;
+        for (User i : list) {
+            if (p.test(i)) {
+                res++;
+            }
+        }
+        return res;
+    }
+
 
 
 }
